@@ -27,7 +27,7 @@ const RequestMenu = ({ request }: Props): JSX.Element => {
       setmenuToggle(null);
     };
     const handleSubmit = (bookingStatus: string) => {
-      sendResponse(bookingStatus, request._id);
+      sendResponse(bookingStatus, request._id, request.owner._id);
       setmenuToggle(null);
     };
     return (

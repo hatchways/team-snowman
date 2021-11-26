@@ -19,7 +19,8 @@ exports.createNotification = asyncHandler(async (req, res) => {
   }
 
   const request = await Request.findById(data);
-  const profile = await User.findById(request.owner).populate("profile");
+  const recipient = type === "newRequest" ? "sitter" : "owner";
+  const profile = await User.findById(request[recipient]).populate("profile");
 
   const date = new Date(request.duration.start).toLocaleDateString();
   const durationMS = request.duration.end - request.duration.start;

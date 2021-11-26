@@ -12,9 +12,12 @@ const NotificationListing = ({ notification }: Props): JSX.Element => {
     notification.type === 'newRequest' || 'requestUpdate'
       ? {
           title: 'Dog Sitting',
-          message: `${notification.data.firstName} has requested your service for ${notification.data.duration} ${
-            notification.data.duration === 1 ? 'hour' : 'hours'
-          }`,
+          message:
+            notification.type == 'newRquest'
+              ? `${notification.data.firstName} has requested your service for ${notification.data.duration} ${
+                  notification.data.duration === 1 ? 'hour' : 'hours'
+                }`
+              : `${notification.data.firstName} has updated your request`,
         }
       : { title: 'Messages', message: `${notification.data.firstName} sent you a new message` };
 

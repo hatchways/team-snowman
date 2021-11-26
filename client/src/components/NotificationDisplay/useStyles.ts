@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   menu: {
-    marginTop: theme.spacing(6.9),
+    marginTop: theme.spacing(3.6),
     '& .MuiPopover-paper': { borderTop: '5px solid black' },
   },
   badge: {

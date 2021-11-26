@@ -1,16 +1,21 @@
 import { Notification } from '../interface/Notification';
 import { fetchNotifications } from '../helpers/APICalls/getNotifications';
 import { updateNotifications } from '../helpers/APICalls/updateNotifications';
+import { postNotification } from '../helpers/APICalls/postnotification';
 import { createContext, FunctionComponent, useState, useContext, useEffect } from 'react';
 
 interface NotificationContext {
   notifications: [Notification] | null | undefined;
   markNotificationsAsRead: () => void;
+  getNewNotifications: () => void;
+  sendNewNotification: (id: string, type: string) => void;
 }
 
 export const NotificationContext = createContext<NotificationContext>({
   notifications: null,
   markNotificationsAsRead: () => null,
+  getNewNotifications: () => null,
+  sendNewNotification: () => null,
 });
 
 export const NotificationProvider: FunctionComponent = ({ children }): JSX.Element => {
@@ -29,8 +34,19 @@ export const NotificationProvider: FunctionComponent = ({ children }): JSX.Eleme
     SetNotifications(updated);
   };
 
+  const getNewNotifications = async () => {
+    const fetchedNotifications = await fetchNotifications();
+    SetNotifications(fetchedNotifications);
+  };
+
+  const sendNewNotification = (id: string, type: string) => {
+    postNotification(id, type);
+  };
+
   return (
-    <NotificationContext.Provider value={{ notifications, markNotificationsAsRead }}>
+    <NotificationContext.Provider
+      value={{ notifications, markNotificationsAsRead, getNewNotifications, sendNewNotification }}
+    >
       {children}
     </NotificationContext.Provider>
   );
