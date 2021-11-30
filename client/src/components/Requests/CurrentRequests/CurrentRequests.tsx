@@ -15,7 +15,7 @@ const CurrentRequests = ({ requests }: Props): JSX.Element => {
       <Box>
         <Typography className={classes.heading}>current requests:</Typography>
         <Grid item className={classes.listing}>
-          {requests.after.map((afterRequest) => {
+          {requests?.after?.map((afterRequest) => {
             return (
               <Box
                 key={afterRequest._id}
@@ -32,7 +32,7 @@ const CurrentRequests = ({ requests }: Props): JSX.Element => {
         </Grid>
         <Typography className={classes.heading}>past requests:</Typography>
         <Grid item className={classes.listing}>
-          {requests.before.map((pastRequest) => {
+          {requests?.before?.map((pastRequest) => {
             return (
               <Box
                 key={pastRequest._id}

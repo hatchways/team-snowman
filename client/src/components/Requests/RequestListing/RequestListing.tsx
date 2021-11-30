@@ -41,7 +41,7 @@ const RequestListing = ({ request, component }: Props): JSX.Element => {
           </Box>
         </Box>
         <Box className={classes.ownerInfo} display="flex" alignItems="center">
-          <Avatar alt="Profile Image" src={''} />
+          <Avatar alt="Requesters avatar" src={request.owner.profile?.photo} />
           <Typography className={classes.ownerName}>{request.sitter.username}</Typography>
           <Typography
             className={

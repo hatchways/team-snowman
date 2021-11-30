@@ -30,6 +30,7 @@ export default function AddCard(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <Box
         display="flex"
+        width="100%"
         alignItems="flex-start"
         justifyContent="space-between"
         flexDirection="column"

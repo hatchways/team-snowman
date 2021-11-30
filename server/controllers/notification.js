@@ -21,14 +21,13 @@ exports.createNotification = asyncHandler(async (req, res) => {
   const request = await Request.findById(data);
   const recipient = type === "newRequest" ? "sitter" : "owner";
   const profile = await User.findById(request[recipient]).populate("profile");
-
   const date = new Date(request.duration.start).toLocaleDateString();
   const durationMS = request.duration.end - request.duration.start;
   const duration = Math.floor((durationMS / (1000 * 60 * 60)) % 24);
 
   const newNotification = await Notification.create({
     type,
-    userId,
+    userId: profile.profile.userId,
     data: {
       requestId: data,
       firstName: profile.profile.firstName || "",

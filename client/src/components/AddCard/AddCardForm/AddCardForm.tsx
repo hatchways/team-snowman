@@ -84,7 +84,7 @@ export default function AddCard({ handleSubmit }: Props): JSX.Element {
         {({ handleSubmit, setValues, values, touched, errors, isSubmitting }) => (
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <Box width="100%" display="flex" flexDirection="column" alignItems="center">
-              <Box maxWidth="85%">
+              <Box width="95" maxWidth="95%">
                 <Typography component="h4" variant="h6" className={classes.smallTitle}>
                   saved payment profiles:
                 </Typography>

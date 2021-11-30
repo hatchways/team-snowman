@@ -16,7 +16,11 @@ export default function AddCard({ totalCost }: Props): JSX.Element {
 
   const handleSubmit = async () => {
     if (loggedInUserProfile && loggedInUserProfile.defaultPaymentMethod != '' && loggedInUser) {
-      confirmPayments({ totalCost: totalCost, paymentMethod: loggedInUserProfile.defaultPaymentMethod, userId: loggedInUser?.id }).then((data) => {
+      confirmPayments({
+        totalCost: totalCost,
+        paymentMethod: loggedInUserProfile.defaultPaymentMethod,
+        userId: loggedInUser?.id,
+      }).then((data) => {
         if (data.error) {
           updateSnackBarMessage(data.error.message);
         } else if (data.paymentIntent) {

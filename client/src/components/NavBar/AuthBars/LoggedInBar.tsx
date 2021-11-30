@@ -7,11 +7,13 @@ import AuthMenu from '../../AuthMenu/AuthMenu';
 import NotificationLink from '../../NotificationDisplay/NotificationDisplay';
 import TextTransition, { presets } from 'react-text-transition';
 import { useEffect, useState } from 'react';
+import { useTour } from '@reactour/tour';
 
 const LoggedInBar = (): JSX.Element => {
   const classes = useStyles();
   const [showText1, setShowText1] = useState<boolean>(true);
   const [showText2, setShowText2] = useState<boolean>(true);
+  const { isOpen, setIsOpen, currentStep, setCurrentStep } = useTour();
 
   useEffect(() => {
     if (window.innerWidth > 600) {
@@ -36,9 +38,17 @@ const LoggedInBar = (): JSX.Element => {
     }
   }, [showText2]);
 
+  const handleClick = () => {
+    setCurrentStep(6);
+    setIsOpen(true);
+  };
+
   return (
     <Grid container className={classes.navButtons}>
-      <Grid item>
+      <Button variant="outlined" color="primary" onClick={handleClick}>
+        Try our tour
+      </Button>
+      <Grid data-tour="navbar-notifications" item>
         <NotificationLink>
           <Typography variant="h3">
             <TextTransition text={showText2 ? 'Notifications' : ''} springConfig={presets.default} />
@@ -47,26 +57,26 @@ const LoggedInBar = (): JSX.Element => {
       </Grid>
       <Grid item>
         <Button component={Link} to="/my-jobs" color="secondary" size="large" variant="text">
-          <Typography variant="h3">
+          <Typography data-tour="navbar-my-jobs" variant="h3">
             <TextTransition text={showText1 ? 'My Jobs' : ''} springConfig={presets.default} />
           </Typography>
         </Button>
       </Grid>
       <Grid item>
         <Button component={Link} to="/messages" color="secondary" size="large" variant="text">
-          <Typography variant="h3">
+          <Typography data-tour="navbar-messages" variant="h3">
             <TextTransition text={showText2 ? 'Messages' : ''} springConfig={presets.slow} />
           </Typography>
         </Button>
       </Grid>
       <Grid item>
         <Button component={Link} to="/my-sitters" color="secondary" size="large" variant="text">
-          <Typography variant="h3">
+          <Typography data-tour="navbar-my-sitters" variant="h3">
             <TextTransition text={showText1 ? 'My Sitters' : ''} springConfig={presets.slow} />
           </Typography>
         </Button>
       </Grid>
-      <Grid item>
+      <Grid data-tour="navbar-avatar" item>
         <AuthMenu />
       </Grid>
     </Grid>

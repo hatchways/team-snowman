@@ -6,7 +6,7 @@ interface Props {
   userId: string;
 }
 
-export async function confirmPayments({ totalCost, paymentMethod, userId}: Props) {
+export async function confirmPayments({ totalCost, paymentMethod, userId }: Props) {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

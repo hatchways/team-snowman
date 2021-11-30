@@ -1,4 +1,4 @@
-import { useState, useContext, createContext, FunctionComponent, useCallback } from 'react';
+import { useState, useContext, createContext, FunctionComponent, useCallback, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useAuth } from './useAuthContext';
 import { useNotification } from './useNotificationContext';
@@ -28,14 +28,20 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
     );
   }, []);
 
+  useEffect(() => {
+    if (loggedInUser) {
+      initSocket();
+    }
+  }, [loggedInUser, initSocket]);
+
   const emitNotification = (userId: string) => {
     socket?.emit('sendNotification', userId);
   };
 
-  if (socket && loggedInUser) {
+  if (socket) {
     socket.on('connect', () => {
       console.log('Socket Connection Initialized');
-      socket.emit('goOnline', loggedInUser);
+      socket.emit('goOnline', loggedInUser ? loggedInUser : undefined);
     });
     socket.on('newNotification', () => {
       getNewNotifications();

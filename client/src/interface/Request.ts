@@ -1,3 +1,5 @@
+import { Profile } from './Profile';
+
 export default interface Request {
   accepted: boolean | null;
   totalCost: boolean;
@@ -7,7 +9,7 @@ export default interface Request {
   notes: string;
   viewed: boolean;
   _id: string;
-  owner: { username: string; email: string; _id: string };
+  owner: { username: string; email: string; _id: string; profile: Profile };
   sitter: { username: string; email: string; _id: string };
   duration: {
     _id: string;

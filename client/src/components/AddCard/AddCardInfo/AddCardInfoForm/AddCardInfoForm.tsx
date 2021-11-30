@@ -31,7 +31,7 @@ const SetupForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <Button type="submit" disabled={!stripe}>
+      <Button variant="outlined" color="primary" type="submit" disabled={!stripe}>
         Submit
       </Button>
       {errorMessage && <Box>{errorMessage}</Box>}

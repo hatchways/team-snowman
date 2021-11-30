@@ -1,14 +1,16 @@
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import useStyles from './useStyles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import ProfileForm from './ProfileForm/ProfileForm';
 import EditPhoto from './EditPhoto/EditPhoto';
 import AddCard from '../AddCard/AddCard';
+import { useTour } from '@reactour/tour';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,16 +44,22 @@ function a11yProps(index: number) {
 const EditMenu = (): JSX.Element => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const { isOpen, setIsOpen, currentStep, setCurrentStep } = useTour();
 
   const handleChange = (event: ChangeEvent<Record<string, unknown>>, newValue: number) => {
     setValue(newValue);
   };
 
+  const handleClick = () => {
+    setCurrentStep(0);
+    setIsOpen(true);
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={9} md={9} lg={9} className={classes.content}>
-        <Grid item className={classes.tabContainer}>
-          <Grow in={true} timeout={2000}>
+        <Grow in={true} timeout={2000}>
+          <Grid item className={classes.tabContainer}>
             <Tabs
               orientation="vertical"
               variant="scrollable"
@@ -59,15 +67,18 @@ const EditMenu = (): JSX.Element => {
               className={classes.tabs}
               onChange={handleChange}
             >
-              <Tab label="Edit Profile" {...a11yProps(0)} />
-              <Tab label="Profile Photo" {...a11yProps(1)} />
-              <Tab label="Availability" {...a11yProps(2)} />
-              <Tab label="Payment" {...a11yProps(3)} />
-              <Tab label="Security" {...a11yProps(4)} />
-              <Tab label="Settings" {...a11yProps(5)} />
+              <Tab data-tour="profile-edit-profile" label="Edit Profile" {...a11yProps(0)} />
+              <Tab data-tour="profile-edit-photo" label="Profile Photo" {...a11yProps(1)} />
+              <Tab data-tour="profile-availability" label="Availability" {...a11yProps(2)} />
+              <Tab data-tour="profile-payment" label="Payment" {...a11yProps(3)} />
+              <Tab data-tour="profile-security" label="Security" {...a11yProps(4)} />
+              <Tab data-tour="profile-settings" label="Settings" {...a11yProps(5)} />
             </Tabs>
-          </Grow>
-        </Grid>
+            <Button variant="outlined" color="primary" onClick={handleClick}>
+              Try our tour
+            </Button>
+          </Grid>
+        </Grow>
         <Grid component={Paper} className={classes.tabComponents}>
           <Grow in={value === 0} timeout={2000}>
             <TabPanel value={value} index={0}>

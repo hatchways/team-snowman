@@ -49,7 +49,12 @@ exports.getRequests = asyncHandler(async (req, res) => {
     $or: [{ owner: req.user.id }, { sitter: req.user.id }],
   })
     .populate("sitter", ["username", "email", "_id"])
-    .populate("owner", ["username", "email", "_id"]);
+    .populate({
+      path: "owner",
+      model: "User",
+      select: "email profile _id username",
+      populate: { path: "profile", model: "Profile" },
+    });
   const processedRequests = await organizeRequests(requests);
   res.status(200).json({
     success: {
@@ -80,7 +85,7 @@ exports.editRequest = asyncHandler(async (req, res, next) => {
   }
   const verifyUser = await Request.findOne({ _id: newRequestData.id });
 
-  if (req.user.id != (verifyUser.owner || verifyUser.sitter)) {
+  if (!(req.user.id == verifyUser.owner || req.user.id == verifyUser.sitter)) {
     res.status(401);
     throw new Error("Not authorized");
   }
@@ -94,7 +99,12 @@ exports.editRequest = asyncHandler(async (req, res, next) => {
       $or: [{ owner: req.user.id }, { sitter: req.user.id }],
     })
       .populate("sitter", ["username", "email", "_id"])
-      .populate("owner", ["username", "email", "_id"]);
+      .populate({
+        path: "owner",
+        model: "User",
+        select: "email profile _id username",
+        populate: { path: "profile", model: "Profile" },
+      });
     const processedRequests = await organizeRequests(requests);
     res.status(200).json({
       success: {

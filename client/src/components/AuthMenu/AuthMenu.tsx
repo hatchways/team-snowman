@@ -27,7 +27,7 @@ const AuthMenu = (): JSX.Element => {
   return (
     <div>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-        <Avatar alt="Profile Image" src={loggedInUserProfile?.photo} />
+        <Avatar src={loggedInUserProfile?.photo} />
       </IconButton>
       <Menu
         id="auth-menu"

@@ -31,6 +31,7 @@ const io = socketio(server, {
 });
 
 io.use((socket, next) => {
+  console.log("attempting socket");
   if (socket.handshake.headers.cookie) {
     token = cookie.parse(socket.handshake.headers.cookie).token;
     if (token) {
@@ -51,9 +52,14 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
   console.log("connected");
   socket.on("goOnline", (onlineUser) => {
-    console.log(`New socket connection, id:'${onlineUser.id}'`);
-    socket.join(`${onlineUser.id}`);
+    console.log(
+      `New socket connection, id:'${onlineUser ? onlineUser.id : "unknown Id"}'`
+    );
+    if (onlineUser) {
+      socket.join(`${onlineUser.id}`);
+    }
   });
+
   socket.on("sendNotification", (userId) => {
     io.sockets.to(`${userId}`).emit("newNotification");
   });

@@ -29,11 +29,11 @@ export default function SendRequestDateTimePicker({ type }: props): JSX.Element 
   const updateAvailableTimes = useCallback(() => {
     const times = [];
     let start = new DateObject();
-    if (availability) {
-      const weekDay = selectedDate?.format('dddd');
+    if (availability && selectedDate) {
+      const weekDay = selectedDate.format('dddd');
       if (weekDay) {
-        start = new DateObject(availability[weekDay].start);
-        const end = new DateObject(availability[weekDay].end);
+        start = new DateObject(availability[weekDay]?.start);
+        const end = new DateObject(availability[weekDay]?.end);
         if (type == 'end' && requestedStart) {
           const sameDay = new DateObject(requestedStart);
           if (sameDay.day === selectedDate?.day) {
